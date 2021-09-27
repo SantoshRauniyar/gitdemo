@@ -1,0 +1,41 @@
+
+	5 Dec 2020
+
+You will need to create a Sub Menu
+under Team > Units
+This will lead to
+Unit Creation Form
+Fields:
+Unit Name
+Select Program
+Select Department
+
+
+Departments are
+Admin Department
+Accounts Department
+Marketing Department
+Sales Department
+Operations Department
+Network Department
+IT Department
+
+Now Create a new Program :
+Haspatal- KZ
+Please create these units in Program Haspatal-KZ
+Marketing Department
+- Video Creation Unit
+- Graphics Creation Unit
+- Articles Creation Unit
+- Publishing Unit
+- Response Unit
+Operations Department
+- Dr Support Unit
+- Patients Support Unit
+- Hospitals Support Unit
+- H360 Support Unit
+
+//
+
+
+
