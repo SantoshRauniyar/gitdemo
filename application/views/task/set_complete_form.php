@@ -34,21 +34,21 @@
 
 									<div class="row">
 											<input type="hidden" value="<?= $singledata->id ?>" name="task_id">
-											<?php if($singledata->assign_uid==$this->session->userdata('id'))  { ?>
+											<?php if($singledata->assign_uid==$this->session->userdata('id') or $this->users_model->is_deptHead($singledata->department))  { ?>
 
 										<?php
 
-												if ($singledata->status!=3) {
+												if ($singledata->status!=3 and $singledata->status==4) {
 								?>
 										
 
 									<div class="form-group col-md-6">
-										<a  href="<?= base_url('task/change_status').'/'.$singledata->id.'/'.'3' ?>"  class="btn btn-info" style="border-color: #ef0f0f; background-color:#ef0f0f;color:white;">Mark As Complete</a>
+										<p  name="Completed"  class="badge badge-info" style="border-color: #ef0f0f;cursor:pointer; background-color:red;color:white;">Completed</p>
 									</div>
 <?php }  else {?>
 
 									<div class="form-group col-md-6">
-										<div  name="Completed"  class="btn btn-info" style="border-color: #ef0f0f;cursor:pointer; background-color:red;color:white;">Mark As Completed</div>
+																	<a  href="<?= base_url('task/change_status').'/'.$singledata->id.'/'.'3' ?>"  onclick="return confirm('Are You sure to Completed ?')" class="badge badge-info" style="border-color: #ef0f0f; background-color:#ef0f0f;color:white;">Complete</a>
 									</div>
 										<?php } } ?>
 								</div>

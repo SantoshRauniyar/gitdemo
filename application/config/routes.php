@@ -52,8 +52,15 @@ $route['assigned_task']		 = "task/assigned_by_task";
 
 
 
+///department
+$route['department/(:num)']		 = "groups/view_department/$1";
+$route['department']		 = "groups/all";
+
 $route['index']		 = "/authentication";
 $route['404_override'] 		 = '';
+
+
+
 
 
 /* End of file routes.php */

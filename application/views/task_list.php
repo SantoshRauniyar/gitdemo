@@ -114,7 +114,7 @@
 															?></td>
 														<td>											
 														
-														<?php if($value->assign_uid==$this->session->userdata('id'))  { ?>
+		<?php if($value->assign_uid==$this->session->userdata('id') or $this->users_model->is_deptHead($value->department))  { ?>
 
 										<?php
 
@@ -125,7 +125,11 @@
 								
 										<p  name="Completed"  class="badge badge-info" style="border-color: #ef0f0f;cursor:pointer; background-color:red;color:white;">Completed</p>
 							
-<?php }  else {?>
+<?php }  else  {   
+
+
+
+	?>
 
 								<a  href="<?= base_url('task/change_status').'/'.$value->id.'/'.'3' ?>"  onclick="return confirm('Are You sure to Completed ?')" class="badge badge-info" style="border-color: #ef0f0f; background-color:#ef0f0f;color:white;">Complete</a>
 										

@@ -1318,4 +1318,34 @@ $obj=json_decode($response);
 			 	           			}
 			 	           		}
 
+
+
+			 	           			public function is_deptHead($did)
+			 	           			{
+			 	           				$res=$this->db->select('manager_id')->from('department')->where('did',$did)->where('manager_id',$this->session->userdata('id'))->get();
+
+			 	           				if($res->num_rows()>0)
+			 	           				{
+			 	           					return true;
+			 	           				}
+			 	           				else
+			 	           				{
+			 	           					return false;
+			 	           				}
+			 	           			}
+
+			 	           			public function did_byHead()
+			 	           			{
+			 	           				$res=$this->db->select('did,manager_id')->from('department')->where('manager_id',$this->session->userdata('id'))->get();
+
+			 	           				if($res->num_rows()>0)
+			 	           				{
+			 	           					$value=$res->result();
+			 	           					return $value[0]->did;
+			 	           				}
+			 	           				else
+			 	           				{
+			 	           					return false;
+			 	           				}
+			 	           			}	
 }

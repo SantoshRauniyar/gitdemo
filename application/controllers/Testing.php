@@ -11,6 +11,7 @@ class Testing extends CI_Controller
 		parent::__construct();
 
 		$this->load->model('task_model');
+		$this->load->model('users_model');
 
 	}
 
@@ -22,4 +23,10 @@ class Testing extends CI_Controller
 			echo "string";
 
 	}
+
+
+		public function is_deptHead()
+		{
+			var_dump($this->users_model->did_byHead());
+		}
 }

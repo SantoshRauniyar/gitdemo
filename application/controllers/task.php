@@ -64,11 +64,12 @@ class Task extends Template
 		$type = !isset($_REQUEST['type'])?'desc':$_REQUEST['type'];
 
 		
-					$this->db->select('taskk.status,users.first_name,taskk.assign_uid,users.last_name,taskk.id,taskk.title,taskk.created_by,taskk.created_at,taskk.priority,taskk.project,projects.project_name,program.pro_name,taskk.end_date');
+					$this->db->select('taskk.status,users.first_name,taskk.assign_uid,users.last_name,taskk.id,taskk.title,taskk.created_by,taskk.created_at,taskk.priority,taskk.project,projects.project_name,program.pro_name,taskk.end_date,taskk.department');
 					$this->db->from('taskk');
 					$this->db->join('program','program.pid=taskk.program','left');
 					$this->db->join('projects','projects.id=taskk.project','left');
 					$this->db->join('users','users.id=taskk.assign_uid');
+				
 					$this->db->where('taskk.assign_uid',$this->session->userdata('id'));
 					$this->db->where('taskk.status !=',4);
 

@@ -311,7 +311,7 @@ public function qualified_lead_list()
 					}
 
 			}
-			          
+			          //call from constructor
 			 	public function changePriorityToHigh()
 			 	           {
 			 	           					

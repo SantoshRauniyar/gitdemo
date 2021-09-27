@@ -489,13 +489,13 @@ class Groups extends Template
 					$this->db->from('taskk');
 					$this->db->join('program','program.pid=taskk.program');
 					$this->db->join('projects','projects.id=taskk.project');
-					$this->db->join('users','users.id=taskk.assign_uid');
+					$this->db->join('users','users.id=taskk.assign_uid','left');
 					$this->db->where('taskk.program',$pid);
 					$this->db->where('taskk.department',$did);
 					$this->db->where('taskk.start_date >=',$start_date);
 					$this->db->where('taskk.end_date <=',$end_date);
 		if ($this->session->userdata('user_role')!='Captain') {
-						$this->db->where('taskk.assign_uid',$this->session->userdata('id'));
+						//$this->db->where('taskk.assign_uid',$this->session->userdata('id'));
 					}
 					
 					$res=$this->db->get();
