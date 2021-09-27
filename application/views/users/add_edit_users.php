@@ -534,7 +534,7 @@
 									<input id="contact_no" name="contact_no" class="form-control" value="<?php if(isset($contact_no)){echo $contact_no;}?>" >
 								</div>
 								<div class="form-group">
-									<lable>Select your cuntry time zone :</lable>
+									<lable>Select your Country time zone :</lable>
 									<?php
 										echo timezone_menu('UTC',"form-control","timezone");
 									?>

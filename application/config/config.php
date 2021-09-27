@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/kizaku/';
+$config['base_url']	= 'http://localhost/kizakutree/';
 $config['assets_url'] = $config['base_url'].'assets/';
 $config['admin_url'] = $config['base_url'].'administrator/';
 
