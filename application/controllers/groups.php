@@ -466,10 +466,11 @@ class Groups extends Template
 
 
 
-           		if ($end_date=$this->input->get('end_date')) {
+           		if ($did=$this->input->get('did')) {
            		
            					
            					$start_date=$this->input->get('start_date');
+           					$end_date=$this->input->get('end_date');
            					$pid=$this->input->get('pid');
            					$did=$this->input->get('did');
            					
@@ -492,8 +493,10 @@ class Groups extends Template
 					$this->db->join('users','users.id=taskk.assign_uid','left');
 					$this->db->where('taskk.program',$pid);
 					$this->db->where('taskk.department',$did);
+					if(isset($end_date) and !empty($end_date)){
 					$this->db->where('taskk.start_date >=',$start_date);
 					$this->db->where('taskk.end_date <=',$end_date);
+				}
 		if ($this->session->userdata('user_role')!='Captain') {
 						//$this->db->where('taskk.assign_uid',$this->session->userdata('id'));
 					}

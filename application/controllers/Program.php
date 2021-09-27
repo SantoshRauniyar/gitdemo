@@ -485,7 +485,7 @@ $imageFileType = strtolower(pathinfo($logo,PATHINFO_EXTENSION));
 									
 									
 							
-								$this->view('program/add_edit__program');
+								$this->view('program/add-edit-program');
 									}
 									else
 									{

@@ -45,7 +45,7 @@
 		public function getprogramdropdown()
 	{
 		$query = "SELECT pid,pro_name FROM program";
-		return $this->get_drop_down($query,"pid","pro_name","Program");
+		return $this->get_drop_down($query,"pid","pro_name","Please");
 	}
 		
 	}

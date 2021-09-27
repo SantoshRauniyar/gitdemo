@@ -38,32 +38,31 @@
 
 
                         })
-                               	//check all order by OID
-                           /*    $('.department').change(function()
+                               	
+                              $('.department').change(function()
                     {
                                
-                              var pid=$('#program').val();
+                              
                                     var did=$(this).val();
                              // var dname=$(this).attr('dept');
-                            alert(pid+did);
+                            //alert(pid+did);
                               
 
                                $.ajax({
 
-                                    url:'<?= base_url() ?>groups/taskbyprodept',
+                                    url:'<?= base_url() ?>section/secbydept',
                                     method:'get',
-                                    data:{pid:pid,did:did},
+                                    data:{did:did},
 
-                                    success:function(tasklist)
+                                    success:function(seclist)
                                     {
                                       //  alert(dept);
-                                           // id='#'+show;
-                                        $('#settasklist').html(tasklist);
-                                        // $('.mycartCount').click();
+                                        $('#seclist').html(seclist);
+                                    
                                          
                                          
                                     },
-                                   error:function(tasklist)
+                                   error:function(seclist)
                                     {
                                         alert('error occurs');
                                     }
@@ -73,85 +72,73 @@
                             
 
 
-                        })*/
-
-
-
-                                    			 //check all order by OID
-                               $('.end_date').mouseleave(function()
+                        })
+                        
+                        
+                            
+                              $('.section').change(function()
                     {
                                
-                              var end_date=$(this).val();
-                              var pid=$('#program').val();
-                              var did=$('#deptlist').val();
-
-                               var start_date=$('#start_date').val();
                               
-                             // var dname=$(this).attr('dept');
-                             if ((!start_date) && (!pid)) {alert("Please Select Start Date and Program ")}
-                             	else{
-                           alert(did+pid+end_date+start_date);
+                                    var sid=$(this).val();
+                             
                               
 
                                $.ajax({
 
-                                    url:'<?= base_url() ?>groups/taskbyprodept',
+                                    url:'<?= base_url() ?>unit/unitbysec',
                                     method:'get',
-                                    data:{did:did,pid:pid,start_date:start_date,end_date:end_date},
+                                    data:{sid:sid},
 
-                                    success:function(tasklist)
+                                    success:function(unitlist)
                                     {
                                       //  alert(dept);
-                                           // id='#'+show;
-                                        $('#settasklist').html(tasklist);
-                                        // $('.mycartCount').click();
+                                        $('#unitlist').html(unitlist);
+                                    
                                          
                                          
                                     },
-                                   error:function(tasklist)
+                                   error:function(unitlist)
                                     {
                                         alert('error occurs');
                                     }
 
 
                         })
-                           } 
+                            
 
 
                         })
 
 
-
-                                    			 //check all order by OID
-                               $('.dept').mouseleave(function()
+                                    	
+                               $('.end_date').mouseleave(function()
                     {
                                
                               var end_date=$(this).val();
                               var pid=$('#program').val();
                               var did=$('#deptlist').val();
+                              var sid=$('#seclist').val();
+                              var uid=$('#unitlist').val();
 
                                var start_date=$('#start_date').val();
                               
                              // var dname=$(this).attr('dept');
                              if ((!start_date) && (!pid)) {alert("Please Select Start Date and Program ")}
                              	else{
-                           alert(did+pid+end_date+start_date);
+                           //alert(did+pid+end_date+start_date);
                               
 
                                $.ajax({
 
-                                    url:'<?= base_url() ?>groups/taskbyprodept',
+                                    url:'<?= base_url() ?>unit/taskbyprodeptsecunit',
                                     method:'get',
-                                    data:{did:did,pid:pid},
+                                    data:{did:did,pid:pid,start_date:start_date,end_date:end_date,sid:sid,uid:uid},
 
                                     success:function(tasklist)
                                     {
-                                      //  alert(dept);
-                                           // id='#'+show;
+
                                         $('#settasklist').html(tasklist);
-                                        // $('.mycartCount').click();
-                                         
-                                         
                                     },
                                    error:function(tasklist)
                                     {
@@ -172,7 +159,7 @@
 <div style="padding:2%;">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header"></h1>
+			<h1 class="page-header">Tasks</h1>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
@@ -195,43 +182,53 @@
 					?>
 
 						<div class="row">
-							<div class="form-group col-md-3">
+							<div class="form-group col-md-2">
 								<label>
 									Select Program
 								</label>
-								<select name="program" id="program"  class="program form-control">
-									
-									<option>Select Please</option>
-									<?php
-
-									foreach ($prolist as $value) {
-										
-										?>
-										<option value="<?= $value->pid ?>"><?= $value->pro_name ?></option>
-										<?php
-									}
-
-									?>
-
-								</select>
+								<?php  if(isset($prolist) and !empty($prolist))
+								{
+								echo form_dropdown('program',$prolist,'',' id="program" class="form-control program"'); 
+								}?>
 							</div>
 
-							<div class="form-group col-md-3">
+							<div class="form-group col-md-2">
 								<label>
 									Select Department
 								</label>
-								<select name="department"  id="deptlist" class="dept form-control">
+								<select name="department"  id="deptlist" class="department form-control">
+									
+									<option>Select Please</option>
+									
+
+								</select>
+							</div><div class="form-group col-md-2">
+								<label>
+									Select Section
+								</label>
+								<select name="section"  id="seclist" class="section form-control">
 									
 									<option>Select Please</option>
 									
 
 								</select>
 							</div>
-							<div class="col-md-3"> 
+							<div class="form-group col-md-2">
+								<label>
+									Select Unit
+								</label>
+								<select name="unit"  id="unitlist" class="unit form-control">
+									
+									<option>Select Please</option>
+									
+
+								</select>
+							</div>
+							<div class="col-md-2"> 
 								<label>Start Date</label>
 								<input type="datetime-local" class="form-control" name="start_date" id="start_date">
 							</div>
-														<div class="col-md-3"> 
+														<div class="col-md-2"> 
 								<label>End Date</label>
 								<input type="datetime-local" class="form-control end_date" id="end_date" name="end_date">
 							</div>
@@ -250,53 +247,8 @@
 							
                             </tbody>
 						</table>
-						<?php if(isset($userdata['links'])){echo $userdata['links'];}?>
-						<div id="#task_reassigning_model" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-							<div class="modal-dialog modal-sm">
-    							<div class="modal-content">
-									<div class="modal-header">
-        								<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        								<h4 class="modal-title">Task Discussion</h4>
-      								</div>
-      								<div class="modal-body">	
-      								</div>
-									<div class="modal-footer">
-										<div class="input-group">
-											<input id="task_id" name="task_id" type="hidden" value="">
-											<input id="comment" name="comment" type="text" class="form-control input-sm" placeholder="Type your comment here..." />
-											<span class="input-group-btn">
-												<button id="send" name="send" type="submit" class="btn btn-warning btn-sm" id="btn-chat">
-												Send
-												</button>
-											</span>
-										</div>
-      								</div>
-	    						</div>
-  							</div>
-						</div>
-						<div id="task_discussion_model" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-							<div class="modal-dialog modal-sm">
-    							<div class="modal-content">
-									<div class="modal-header">
-        								<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        								<h4 class="modal-title">Task Discussion</h4>
-      								</div>
-      								<div class="modal-body">	
-      								</div>
-									<div class="modal-footer">
-										<div class="input-group">
-											<input id="task_id" name="task_id" type="hidden" value="">
-											<input id="comment" name="comment" type="text" class="form-control input-sm" placeholder="Type your comment here..." />
-											<span class="input-group-btn">
-												<button id="send" name="send" type="submit" class="btn btn-warning btn-sm" id="btn-chat">
-												Send
-												</button>
-											</span>
-										</div>
-      								</div>
-	    						</div>
-  							</div>
-						</div>
+						
+			
 						</form>
 					</div>
 				</div>

@@ -1,5 +1,5 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed.');
-class unit extends Template
+class subunit extends Template
 {
 	public function __construct()
 	{
@@ -13,7 +13,13 @@ class unit extends Template
 		$this->load->library('session');
 		$this->load->helper('form');
 		$this->load->model('team_model');
-		$this->load->model('program_model');
+		$this->load->model('section_model');
+
+
+$this->load->model('unit_model');	
+$this->load->model('groups_model');	
+$this->load->model('sub_unit_model');
+$this->load->model('program_model');
 		$this->load->model('authentication_model');
 		$this->load->model('notification_model');
 		$this->load->model('users_model');
@@ -42,21 +48,21 @@ class unit extends Template
 		$this->all();
 	}
 
-		function add_unit()
+		function add_sub_unit()
 		{
-				if($this->user_classification_model->check_role_auth($this->session->userdata('user_role'),'is_add_unit'))
+				if($this->user_classification_model->check_role_auth($this->session->userdata('user_role'),'is_add_sub_unit'))
 		{
 
-			$this->db->order_by('pro_name','asc');
-			$p=$this->db->get('program');
-		$data['program']=$p->result();
 
-		$this->db->order_by('dtitle','asc');
-		$d=$this->db->get('department');
-		$data['dept']=$d->result();
-		$data['userlist']=$this->authentication_model->getUnitHead();
-		//var_dump($data);
-			$this->view('unit/add_unit',$data);
+		$data['programlist']=$this->program_model->getprogramdropdown();
+		$data['departmentlist']=$this->groups_model->getdepartmentdropdown();
+		$data['sectionlist']=$this->section_model->getsectiondropdown();
+		$data['unitlist']=$this->unit_model->getunitdropdown();
+		$data['userlist']=$this->authentication_model->getSubUnitHead();
+		$data['action']=base_url().'subunit/do_save/';
+		$data['title_head']='Add Sub Unit ';
+		
+			$this->view('subunit/add',$data);
 		}//close
 	}
 
@@ -64,13 +70,15 @@ class unit extends Template
 
 		function do_save()
 		{
+				var_dump($_POST);exit();
 
+			$this->form_validation->set_rules('sub_uname','Unit Name','trim|required');
+			$this->form_validation->set_rules('program_id','Program','trim|required');
+			$this->form_validation->set_rules('department_id','Department','trim|required');
 
-			$this->form_validation->set_rules('unit_name','Unit Name','trim|required');
-			$this->form_validation->set_rules('program','Program','trim|required');
-			$this->form_validation->set_rules('dept','Department','trim|required');
-			//$this->form_validation->set_rules('users','Members','required');
-			$this->form_validation->set_rules('unithead','Unit Head','required|is_unique[unit.uhead]');
+			$this->form_validation->set_rules('section_id','Section','trim|required');
+			$this->form_validation->set_rules('unit_id','Unit','trim|required');
+			$this->form_validation->set_rules('sub_uhead','Sub Unit Head','required|is_unique[sub_unit.sub_uhead]');
 
 				if ($this->input->post('submit')) {
 				    
@@ -81,7 +89,7 @@ class unit extends Template
 						
 			$arr=[
                 'id'=>$id,
-				'unit_name'=>$this->input->post('unit_name'),
+				'sub_uname'=>$this->input->post('sub_uname'),
 				'program'=>$this->input->post('program'),
 				'dept'=>$this->input->post('dept'),
 				'uhead'=>$this->input->post('unithead'),
@@ -119,7 +127,7 @@ class unit extends Template
 
 
 							$sentdata=[
-								'message'=>'New '.$arr['unit_name'].' Unit Created.',
+								'message'=>'New '.$arr['sub_uname'].' Unit Created.',
 								'link'=>'unit/single_unit_view/'.$id												
 							];
 							$users=[$arr['uhead'],$section_head,$dept_head,$pro_head,$this->session->userdata('id')];
@@ -144,7 +152,7 @@ class unit extends Template
 				
 
 					$emailBody = file_get_contents(base_url()."assets/email/unit/add.html");
-					$emailBody = str_replace("<@unit_name@>",$arr['unit_name'],$emailBody);
+					$emailBody = str_replace("<@sub_uname@>",$arr['sub_uname'],$emailBody);
 					$emailBody = str_replace("<@section_name@>",$section_name,$emailBody);
 					$emailBody = str_replace("<@user_name@>",$this->user_role_model->get_user_name($value->email),$emailBody);
 					$emailBody = str_replace("<@link@>",base_url().'/unit/single_unit_view/'.$id,$emailBody);
@@ -258,7 +266,7 @@ $this->view('unit/add_unit',$data);
 				
 
 					$emailBody = file_get_contents(base_url()."assets/email/unit/delete.html");
-					$emailBody = str_replace("<@unit_name@>",$arr['unit_name'],$emailBody);
+					$emailBody = str_replace("<@sub_uname@>",$arr['sub_uname'],$emailBody);
 					if(!empty($arr['section_id']))
 					{
 					$emailBody = str_replace("<@section_name@>",$section_name,$emailBody);
@@ -525,7 +533,7 @@ $data['userlist']=$this->authentication_model->getUnitHead();
 		{
 
 
-			$this->form_validation->set_rules('unit_name','Unit Name','trim|required');
+			$this->form_validation->set_rules('sub_uname','Unit Name','trim|required');
 			$this->form_validation->set_rules('program','Program','trim|required');
 			$this->form_validation->set_rules('dept','Department','trim|required');
 			//$this->form_validation->set_rules('users','Members','required');
@@ -538,7 +546,7 @@ $data['userlist']=$this->authentication_model->getUnitHead();
 							
 			$arr=[
 
-				'unit_name'=>$this->input->post('unit_name'),
+				'sub_uname'=>$this->input->post('sub_uname'),
 				'program'=>$this->input->post('program'),
 				'dept'=>$this->input->post('dept'),
 				'uhead'=>$this->input->post('unithead'),
@@ -586,7 +594,7 @@ $data['userlist']=$this->authentication_model->getUnitHead();
 									 * 
 									 */
 									$sentdata=[
-										'message'=>$arr['unit_name'].' Unit Updated.',
+										'message'=>$arr['sub_uname'].' Unit Updated.',
 										'link'=>'unit/single_unit_view/'.$id												
 									];
 									$users=[$arr['uhead'],$section_head,$dept_head,$pro_head,$this->session->userdata('id')];
@@ -610,7 +618,7 @@ $data['userlist']=$this->authentication_model->getUnitHead();
 				
 
 					$emailBody = file_get_contents(base_url()."assets/email/unit/edit.html");
-					$emailBody = str_replace("<@unit_name@>",$arr['unit_name'],$emailBody);
+					$emailBody = str_replace("<@sub_uname@>",$arr['sub_uname'],$emailBody);
 					if(!empty($arr['section_id']))
 					{
 					$emailBody = str_replace("<@section_name@>",$section_name,$emailBody);
@@ -768,7 +776,7 @@ $data['userlist']=$this->authentication_model->getUnitHead();
 				<?php
 											foreach ($unitdata as $value) {
 										?>
-											<option value="<?=$value->id ?>" ><?=$value->unit_name ?></option>
+											<option value="<?=$value->id ?>" ><?=$value->sub_uname ?></option>
 
 
 										<?php
@@ -800,7 +808,7 @@ $data['userlist']=$this->authentication_model->getUnitHead();
 				<?php
 											foreach ($unitdata as $value) {
 										?>
-											<option value="<?=$value->id ?>" ><?=$value->unit_name ?></option>
+											<option value="<?=$value->id ?>" ><?=$value->sub_uname ?></option>
 
 
 										<?php
@@ -811,12 +819,7 @@ $data['userlist']=$this->authentication_model->getUnitHead();
 											</select>
 
 			<?php
-		}else{
-
-
-					echo "<option>Unit Not Available</option>";
 		}
-
 		}
 		/*else
 		{
@@ -838,7 +841,7 @@ $data['userlist']=$this->authentication_model->getUnitHead();
 						
 
 
-								$this->db->select('unit.id,unit.unit_name,program.pro_name,department.dtitle');
+								$this->db->select('unit.id,unit.sub_uname,program.pro_name,department.dtitle');
 								$this->db->from('unit');
 								$this->db->join('program','program.pid=unit.program');
 								$this->db->join('department','department.did=unit.dept');
@@ -854,7 +857,7 @@ $data['userlist']=$this->authentication_model->getUnitHead();
 								<tr class="odd gradeX">
 									<!--  <td><input type="checkbox" id="chk[]" name="chk[]" onclick="check();"></td>-->
 								<tr>
-									<td><?= $data->unit_name ?></td>
+									<td><?= $data->sub_uname ?></td>
 									<td><?= $data->pro_name ?></td>
 									<td><?= $data->dtitle ?></td>
 									<td>
@@ -874,7 +877,7 @@ function uniteditbydept()
 						
 
 
-								$this->db->select('unit.id,unit.unit_name,program.pro_name,department.dtitle');
+								$this->db->select('unit.id,unit.sub_uname,program.pro_name,department.dtitle');
 								$this->db->from('unit');
 								$this->db->join('program','program.pid=unit.program');
 								$this->db->join('department','department.did=unit.dept');
@@ -890,7 +893,7 @@ function uniteditbydept()
 								<tr class="odd gradeX">
 									<!--  <td><input type="checkbox" id="chk[]" name="chk[]" onclick="check();"></td>-->
 								<tr>
-									<td><?= $data->unit_name ?></td>
+									<td><?= $data->sub_uname ?></td>
 									<td><?= $data->pro_name ?></td>
 									<td><?= $data->dtitle ?></td>
 									<td>
@@ -913,7 +916,7 @@ function uniteditbydept()
 						
 
 
-								$this->db->select('unit.uhead,unit.id,unit.unit_name,program.pro_name,department.dtitle,unit.program,unit.dept,unit.section_id');
+								$this->db->select('unit.uhead,unit.id,unit.sub_uname,program.pro_name,department.dtitle,unit.program,unit.dept,unit.section_id');
 								$this->db->from('unit');
 								$this->db->join('program','program.pid=unit.program');
 								$this->db->join('department','department.did=unit.dept');
@@ -936,7 +939,7 @@ function uniteditbydept()
 								<tr class="odd gradeX">
 									<!--  <td><input type="checkbox" id="chk[]" name="chk[]" onclick="check();"></td>-->
 								<tr>
-									<td><?= $data->unit_name ?></td>
+									<td><?= $data->sub_uname ?></td>
 									<td><?= $data->pro_name ?></td>
 									<td><?= $data->dtitle ?></td>
 									<td>
@@ -1229,7 +1232,7 @@ function uniteditbydept()
 
                         $ddata['heading']="Unit";
                         $ddata['r1']='id';
-                        $ddata['r2']='unit_name';
+                        $ddata['r2']='sub_uname';
                     
                         
 					$this->view('dashboard/dashboard',$ddata);

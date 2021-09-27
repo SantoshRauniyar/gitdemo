@@ -1,5 +1,5 @@
 <?php
-class Unit_model extends MY_Generic_Model 
+class Section_model extends MY_Generic_Model 
 {
    public function __construct()
    {
@@ -12,10 +12,10 @@ class Unit_model extends MY_Generic_Model
    }
 
 
-				public function getunitdropdown()
+				public function getsectiondropdown()
 	{
-		$query = "SELECT id,unit_name FROM unit";
-		return $this->get_drop_down($query,"id","unit_name","Please");
+		$query = "SELECT id,section_name FROM section";
+		return $this->get_drop_down($query,"id","section_name","Please");
 	}
 
 

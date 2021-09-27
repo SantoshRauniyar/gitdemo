@@ -94,6 +94,12 @@ class Authentication_model extends MY_Generic_Model
 		$query = "SELECT id, concat(first_name,' ',last_name) as user_name FROM users  where user_role=27 and  created_by=".$this->session->userdata('id')."  order by first_name asc";
 		return $this->get_drop_down($query,"id","user_name"," Please ");
 	}
+
+	public function getSubUnitHead()
+	{
+		$query = "SELECT id, concat(first_name,' ',last_name) as user_name FROM users  where user_role=27 and  created_by=".$this->session->userdata('id')."  order by first_name asc";
+		return $this->get_drop_down($query,"id","user_name"," Please ");
+	}
 	
 	public function getProjectHead()
 	{

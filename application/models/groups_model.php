@@ -169,4 +169,12 @@ class Groups_model extends MY_Generic_Model
 			return $data;
 		}
 
+
+				public function getdepartmentdropdown()
+	{
+		$query = "SELECT did,dtitle FROM department";
+		return $this->get_drop_down($query,"did","dtitle","Please");
+	}
+
+
 }	
