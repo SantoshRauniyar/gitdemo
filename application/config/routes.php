@@ -56,6 +56,18 @@ $route['assigned_task']		 = "task/assigned_by_task";
 $route['department/(:num)']		 = "groups/view_department/$1";
 $route['department']		 = "groups/all";
 
+
+//sub unit
+$route['child-unit/(:num)']		 = "subunit/edit/$1";
+$route['child-unit-view/(:num)']		 = "subunit/single_view/$1";
+$route['child-unit/destroy/(:num)']		 = "subunit/destroy/$1";
+$route['child-unit']		 = "subunit/all";
+$route['create-child-unit']		 = "subunit/add_sub_unit";
+
+$route['child-unit-deletelist']		 = "subunit/deletelist";
+$route['child-unit-editlist']		 = "subunit/editlist";
+
+
 $route['index']		 = "/authentication";
 $route['404_override'] 		 = '';
 

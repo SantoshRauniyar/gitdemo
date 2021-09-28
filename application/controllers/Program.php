@@ -475,7 +475,7 @@ $imageFileType = strtolower(pathinfo($logo,PATHINFO_EXTENSION));
     function do_save()
 					{
 		$this->form_validation->set_rules('pro_name', 'Program Name', 'required');
-		$this->form_validation->set_rules('pro_head', 'Program Head', 'required|is_unique[program.pro_head]');
+		$this->form_validation->set_rules('pro_head', 'Program Head', 'required');
 		$this->form_validation->set_rules('pro_code', 'Program Code', 'required');
 								if($this->input->post('submit'))
 								{

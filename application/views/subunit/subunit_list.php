@@ -88,7 +88,7 @@
                            //  alert(pid+did);
                                $.ajax({
 
-                                    url:'<?= base_url() ?>unit/unitlistbydept',
+                                    url:'<?= base_url() ?>unit/unitbysec',
                                     method:'get',
                                     data:{sid:sid},
 
@@ -114,6 +114,43 @@
                         })
 
 
+
+
+
+                                  	        		        	        $('.unit').change(function()
+                    {
+                               
+                              var uid=$(this).val();
+
+                             // var dname=$(this).attr('dept');
+                              
+                           //  alert(pid+did);
+                               $.ajax({
+
+                                    url:'<?= base_url() ?>subunit/subunitlistbyunit',
+                                    method:'get',
+                                    data:{uid:uid},
+
+                                    success:function(subunit)
+                                    {
+                                      //  alert(dept);
+                                           // id='#'+show;
+                                        $('#subunitlist').html(subunit);
+                                        // $('.mycartCount').click();
+                                         
+                                         
+                                    },
+                                   error:function(subunit)
+                                    {
+                                        alert('error occurs');
+                                    }
+
+
+                        })
+                            
+
+
+                        })
 
 
                                  
@@ -150,28 +187,17 @@
 
 
 										<div class="row">
-											<div class="form-group col-md-4">
+											<div class="form-group col-md-3">
 												<label>Select Program</label>
-												<select class="form-control program" id="programlist">
-																		<option>Select Please</option>
-																<?php
+										<?php
 
-																	foreach ($programlist as  $value) {
-																		?>
-
-																			<option value="<?= $value->pid ?>"><?= $value->pro_name ?></option>
+													echo form_dropdown('program',$programlist,'','class="form-control program"');
 
 
-																		<?php
-																	}
-
-																?>
-
-
-												</select>
+										?>
 											</div>
 
-											<div class="form-group col-md-4">
+											<div class="form-group col-md-3">
 												<label>Select Department</label>
 												<select class="form-control dept" id="deptlist">
 																
@@ -183,9 +209,19 @@
 
 
 
-											<div class="form-group col-md-4">
+											<div class="form-group col-md-3"	>
 												<label>Select Section</label>
 												<select class="form-control sec" id="seclist">
+																
+															<option>Select Please</option>
+
+
+												</select>
+											</div>
+
+											<div class="form-group col-md-3"	>
+												<label>Select Unit</label>
+												<select class="form-control unit" id="unitlist">
 																
 															<option>Select Please</option>
 
@@ -199,13 +235,15 @@
 							<thead>
 								<tr>
 									<!-- <th><input type="checkbox" id="checkall" name="checkall" onclick="checkUncheck();"></th>-->
-									<th>Unit Name</th>
+									<th>Sub Unit Name</th>
 									<th>Program</th>
 									<th>Department</th>
+									<th>Section</th>
+									<th>Unit</th>
 									<th>Action</th>
 								</tr>
 							</thead>
-							<tbody id="unitlist">
+							<tbody id="subunitlist">
 						
                             </tbody>
 						</table>

@@ -243,7 +243,7 @@ $(document).ready(function(){
 						<div class="container">
 								
 
-							<form role="form" name="editprofileform" id="editprofileform" method="post" action="<?php if(isset($action)){echo $action; } ?>">
+
 
 
 
@@ -270,11 +270,11 @@ $(document).ready(function(){
 
             if(isset($subunit->program_id) and !empty($subunit->program_id))
                 {
-             echo form_dropdown('program_id',$programlist,$subunit->program_id,'class="form-control program"') ;
+             echo form_dropdown('program_id',$programlist,$subunit->program_id,'class="form-control program" disabled=""') ;
               }
               else
               {
-        echo form_dropdown('program_id',$programlist,'','class="form-control program"') ;
+        echo form_dropdown('program_id',$programlist,'','class="form-control program" disabled=""') ;
               }
 
              ?>
@@ -287,11 +287,11 @@ $(document).ready(function(){
 
             if(isset($subunit->department_id) and !empty($subunit->department_id))
                 {
-                  echo form_dropdown('department_id',$departmentlist,$subunit->department_id,' id="dept_id" class="form-control dept"') ;
+                  echo form_dropdown('department_id',$departmentlist,$subunit->department_id,' id="dept_id" class="form-control dept" disabled=""') ;
               }
               else
               {
-        echo form_dropdown('department_id',$departmentlist,'',' id="dept_id" class="form-control dept"') ;
+        echo form_dropdown('department_id',$departmentlist,'',' id="dept_id" class="form-control dept" disabled=""') ;
               }
 
              ?>
@@ -304,11 +304,11 @@ $(document).ready(function(){
 
             if(isset($subunit->section_id) and !empty($subunit->section_id))
                 {
-                  echo form_dropdown('section_id',$sectionlist,$subunit->section_id,' id="section_list" class="form-control sec"') ;
+                  echo form_dropdown('section_id',$sectionlist,$subunit->section_id,' id="section_list" class="form-control sec" disabled=""') ;
               }
               else
               {
-          echo form_dropdown('section_id',$sectionlist,'',' id="section_list" class="form-control sec"') ;
+          echo form_dropdown('section_id',$sectionlist,'',' id="section_list" class="form-control sec" disabled=""') ;
               }
 
              ?><div class="text text-danger"><?= form_error('section_id') ?></div>
@@ -318,11 +318,11 @@ $(document).ready(function(){
 
             if(isset($subunit->unit_id) and !empty($subunit->unit_id))
                 {
-                  echo form_dropdown('unit_id',$unitlist,$subunit->unit_id,' id="unit_list" class="form-control unit"') ;
+                  echo form_dropdown('unit_id',$unitlist,$subunit->unit_id,' id="unit_list" class="form-control unit" disabled=""') ;
               }
               else
               {
-          echo form_dropdown('unit_id',$unitlist,'',' id="unit_list" class="form-control unit"') ;
+          echo form_dropdown('unit_id',$unitlist,'',' id="unit_list" class="form-control unit" disabled=""') ;
               }
 
              ?><div class="text text-danger"><?= form_error('unit_id') ?></div>
@@ -330,7 +330,7 @@ $(document).ready(function(){
 									
 														<div class="form-group">
 													<label>Sub Unit Name:<strong><font color='red'>*</font></strong></label>
-													<input type="text" value="<?= isset($subunit->sub_uname)?$subunit->sub_uname:'' ?>"  name="sub_uname" class="form-control">
+													<input readonly="" type="text" value="<?= isset($subunit->sub_uname)?$subunit->sub_uname:'' ?>"  name="sub_uname" class="form-control">
 													<span class="text-danger"><?=  form_error('sub_uname') ?></span>
 						</div>
 
@@ -343,11 +343,11 @@ $(document).ready(function(){
 											if(isset($subunit->sub_uhead) && !empty($subunit->sub_uhead))
 																					
 											{
-												echo form_dropdown('sub_uhead', $userlist , $subunit->sub_uhead,"id = 'lol' class='form-control sub_uhead'");
+												echo form_dropdown('sub_uhead', $userlist , $subunit->sub_uhead,"id = 'lol' class='form-control sub_uhead' disabled=''");
 											}
                       else
                       {
-                echo form_dropdown('sub_uhead', $userlist ,'',"id = 'lol' class='form-control sub_uhead'");
+                echo form_dropdown('sub_uhead', $userlist ,'',"id = 'lol' class='form-control sub_uhead' disabled=''");
                       }
 										?>
 									<span class="text-danger"><?=  form_error('sub_uhead') ?></span>
@@ -360,16 +360,16 @@ $(document).ready(function(){
                   <label>Sub Unit Followers:<strong><font color='red'>*</font></strong></label>
                   
                                       <?php
-                                      var_dump($subunit);
+                                  
                       if(isset($subunit) && !empty($subunit))
                                           
                       {
                         $fo=json_decode($subunit->sub_unit_followers);
-                        echo form_multiselect('sub_unit_followers[]', $userlist , $fo ,"id = 'followerlist' class='form-control '");
+                        echo form_multiselect('sub_unit_followers[]', $userlist , $fo ,"id = 'followerlist' class='form-control ' disabled=''");
                       }
                       else
                       {
-                echo form_multiselect('sub_unit_followers[]', $userlist ,'',"id = 'followerlist' class='form-control '");
+                echo form_multiselect('sub_unit_followers[]', $userlist ,'',"id = 'followerlist' class='form-control ' disabled=''");
                       }
                     ?>
                   <span class="text-danger"><?=  form_error('sub_unit_followers') ?></span>
@@ -378,9 +378,9 @@ $(document).ready(function(){
 									
 
 								<div class="form-group">
-									<input type="submit" value="save" name="submit" class="btn btn-success" style="color:white;background-color: #ef0f0f;border-color:#ef0f0f">
+									<a href="<?= base_url('/child-unit') ?>" class="btn btn-success" style="color:white;background-color: #ef0f0f;border-color:#ef0f0f">Back</a>
 								</div>
-							</form>
+						
 						</div>     
 					</div>
                     <!-- /.row (nested) -->

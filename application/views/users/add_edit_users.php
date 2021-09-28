@@ -493,7 +493,7 @@
 											}
 											else
 											{
-												echo form_dropdown('city_id',$citylist,'',"id = 'city_id' class='form-control city'");
+												echo form_dropdown('city_id',$citylist,'0',"id = 'city_id' class='form-control city'");
 											}
 										?>
 									</div>	
